@@ -465,7 +465,7 @@ function Select({
         onChange={(e) => onChange(e.target.value)}
         className="w-full appearance-none rounded-lg border border-glass bg-elevated py-2 pl-3 pr-8 text-sm text-foreground outline-none focus:border-primary/60"
       >
-        {options.map((o) => (
+        {Array.from(new Set(options)).map((o) => (
           <option key={o} value={o}>
             {o}
           </option>

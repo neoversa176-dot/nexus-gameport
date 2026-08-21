@@ -14,7 +14,7 @@ export function ProductCard({ listing, view = "grid" }: { listing: Listing; view
 
   const art = (
     <div className={cn("relative overflow-hidden bg-surface", view === "grid" ? "aspect-[16/9]" : "h-full min-h-32")}>
-      <ListingArt seed={listing.id} hue={game?.hue ?? 280} className="h-full w-full object-cover" />
+      <ListingArt seed={listing.id} hue={((game?.hue ?? 280) + listing.title.length * 7) % 360} className="h-full w-full object-cover" />
       <div className="absolute left-2 top-2 flex flex-wrap gap-1.5">
         {listing.delivery === "Instant" && (
           <span className="inline-flex items-center gap-1 rounded-full bg-cyan/15 px-2 py-0.5 text-[0.65rem] font-semibold text-cyan ring-1 ring-cyan/30">
