@@ -131,7 +131,7 @@ const TITLE_PATTERNS: Record<string, string[]> = {
 };
 
 function pick<T>(arr: T[], i: number): T {
-  return arr[i % arr.length];
+  return arr[i % arr.length] as T;
 }
 
 function build(): Listing[] {
@@ -148,7 +148,7 @@ function build(): Listing[] {
         const base = 4 + ((n * 37 + k * 13) % 340) + (cat.slug === "accounts" ? 60 : 0);
         const price = Math.round(base * 100) / 100;
         const discounted = (n + k) % 4 === 0;
-        const patterns = TITLE_PATTERNS[cat.slug];
+        const patterns = TITLE_PATTERNS[cat.slug] as string[];
         const title = pick(patterns, n + k)
           .replace("{g}", game.name)
           .replace("{r}", rank)
@@ -159,7 +159,7 @@ function build(): Listing[] {
           game: game.slug,
           category: cat.slug,
           price,
-          oldPrice: discounted ? Math.round(price * 1.32 * 100) / 100 : undefined,
+          ...(discounted ? { oldPrice: Math.round(price * 1.32 * 100) / 100 } : {}),
           seller,
           delivery: pick(DELIVERIES, n + k),
           stock: 1 + ((n * 7 + k) % 42),
@@ -168,7 +168,7 @@ function build(): Listing[] {
           server: pick(SERVERS, n + k * 3),
           rank,
           rarity,
-          unit: cat.slug === "currency" ? "per 1K" : undefined,
+          ...(cat.slug === "currency" ? { unit: "per 1K" } : {}),
           sold: 12 + ((n * 19 + k * 5) % 900),
           description: `${title} listed by ${seller.name}. Every order runs through GameVault escrow: funds are held until you confirm the goods landed exactly as described. Transfers are logged, timestamped and covered by our resolution team.`,
           included: [
