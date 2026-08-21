@@ -31,7 +31,7 @@ export function SearchBox({ size = "sm", className, placeholder = "Search games,
     pushSearch(v);
     setQuery(v);
     setOpen(false);
-    navigate({ to: "/browse", search: { q: v || undefined } });
+    navigate({ to: "/browse", search: v ? { q: v } : {} });
   };
 
   const big = size === "lg";

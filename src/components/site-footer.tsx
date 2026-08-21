@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Wordmark } from "./brand";
 import { ShieldCheck, Headphones, Timer } from "lucide-react";
+import { CATEGORIES } from "@/lib/marketplace-data";
 
 export function SiteFooter() {
   return (
@@ -26,33 +27,66 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <FooterCol
-            title="Marketplace"
-            links={[
-              { label: "Browse all", to: "/browse" },
-              { label: "Accounts", to: "/browse" },
-              { label: "Currency", to: "/browse" },
-              { label: "Boosting", to: "/browse" },
-            ]}
-          />
-          <FooterCol
-            title="Sellers"
-            links={[
-              { label: "Start selling", to: "/sell" },
-              { label: "Seller levels", to: "/sell" },
-              { label: "Payout schedule", to: "/sell" },
-              { label: "Fees", to: "/sell" },
-            ]}
-          />
-          <FooterCol
-            title="Company"
-            links={[
-              { label: "How it works", to: "/how-it-works" },
-              { label: "Support center", to: "/support" },
-              { label: "Trust & safety", to: "/how-it-works" },
-              { label: "Contact", to: "/support" },
-            ]}
-          />
+          <div className="min-w-0">
+            <h3 className="text-sm font-semibold text-foreground">Marketplace</h3>
+            <ul className="mt-3 grid gap-2">
+              <li>
+                <Link to="/browse" search={{}} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  Browse all
+                </Link>
+              </li>
+              {CATEGORIES.slice(0, 4).map((c) => (
+                <li key={c.slug}>
+                  <Link
+                    to="/browse"
+                    search={{ category: c.slug }}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {c.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="min-w-0">
+            <h3 className="text-sm font-semibold text-foreground">Sellers</h3>
+            <ul className="mt-3 grid gap-2">
+              {["Start selling", "Seller levels", "Payout schedule", "Fees"].map((label) => (
+                <li key={label}>
+                  <Link to="/sell" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="min-w-0">
+            <h3 className="text-sm font-semibold text-foreground">Company</h3>
+            <ul className="mt-3 grid gap-2">
+              <li>
+                <Link to="/how-it-works" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  How it works
+                </Link>
+              </li>
+              <li>
+                <Link to="/how-it-works" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  Trust &amp; safety
+                </Link>
+              </li>
+              <li>
+                <Link to="/support" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  Support center
+                </Link>
+              </li>
+              <li>
+                <Link to="/support" className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="mt-10 grid gap-2 border-t border-border/60 pt-6 text-xs text-muted-foreground sm:grid-cols-[minmax(0,1fr)_auto]">
@@ -61,25 +95,5 @@ export function SiteFooter() {
         </div>
       </div>
     </footer>
-  );
-}
-
-function FooterCol({ title, links }: { title: string; links: { label: string; to: string }[] }) {
-  return (
-    <div className="min-w-0">
-      <h3 className="text-sm font-semibold text-foreground">{title}</h3>
-      <ul className="mt-3 grid gap-2">
-        {links.map((l, i) => (
-          <li key={`${l.label}-${i}`}>
-            <Link
-              to={l.to}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              {l.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }
